@@ -31,15 +31,23 @@ class AdminLogin extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () async {
-                await FirebaseAuth.instance.signInWithEmailAndPassword(
-                  email: emailController.text.trim(),
-                  password: passwordController.text.trim(),
-                );
+                try {
+                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  );
+                } catch (e) {
+                  var alertDialog = AlertDialog(
+                    title: Text("Alert"),
+                    content: Text('Incorrect email or password'),
+                  );
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AdminPage()),
-                );
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return alertDialog;
+                      });
+                }
               },
               child: Text('SignIn'))
         ]),
