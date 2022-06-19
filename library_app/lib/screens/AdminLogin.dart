@@ -1,9 +1,17 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:library_app/screens/AdminPage.dart';
 
-class AdminLogin extends StatelessWidget {
-  final emailController = TextEditingController();
+class AdminLogin extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<AdminLogin> {
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
   final auth = FirebaseAuth.instance;
@@ -19,7 +27,7 @@ class AdminLogin extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(30, 40, 30, 0),
         child: Column(children: [
           TextField(
-            controller: emailController,
+            controller: usernameController,
             decoration: InputDecoration(labelText: 'Enter Username'),
           ),
           TextField(
@@ -31,29 +39,31 @@ class AdminLogin extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () async {
-                try {
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: emailController.text.trim(),
-                    password: passwordController.text.trim(),
-                  );
-                } catch (e) {
-                  var alertDialog = AlertDialog(
-                    title: Text("Alert"),
-                    content: Text('Incorrect email or password'),
-                  );
-
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return alertDialog;
-                      });
-                }
+                setState(() {
+                  login();
+                });
               },
               child: Text('SignIn'))
         ]),
       ),
     );
   }
-}
 
-class AuthenticationService {}
+  Future<void> login() async {
+    var response = await http.post(
+        Uri.parse("https://sids438.pythonanywhere.com/login/"),
+        body: ({
+          'username': usernameController.text,
+          'password': passwordController.text
+        }));
+    if (response.statusCode == 200) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminPage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Invalid Credentials")));
+    }
+  }
+}

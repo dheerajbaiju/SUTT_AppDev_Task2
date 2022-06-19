@@ -1,10 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:library_app/screens/AdminLogin.dart';
 import 'package:library_app/screens/AdminPage.dart';
 import 'package:library_app/screens/StudentPage.dart';
 import 'package:library_app/screens/services/firebase_service.dart';
+import 'package:http/http.dart' as http;
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

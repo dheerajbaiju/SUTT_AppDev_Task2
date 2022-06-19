@@ -115,7 +115,7 @@ class AdminPage extends StatelessWidget {
           ElevatedButton(
               onPressed: () {
                 final name = controllerName.text;
-                final status = controllerStatus.text;
+                var status = (controllerStatus.text);
                 final title = controllerTitle.text;
                 add(name, status, title);
               },
@@ -142,7 +142,7 @@ class AdminPage extends StatelessWidget {
                         subtitle: Text(
                           'Name of Author: ' +
                               documentSnapshot['name'] +
-                              ' Availability Status: ' +
+                              'Availability: ' +
                               documentSnapshot['Availability Status'],
                           style: TextStyle(fontSize: 10),
                         ),
