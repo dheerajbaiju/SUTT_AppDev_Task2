@@ -36,7 +36,6 @@ class _MyAppState extends State<StudentPage> {
                   child: ListTile(
                     title: Text('Book title: ' +
                         documentSnapshot['name'] +
-                        ' Availability Status: ' +
                         documentSnapshot['Book Title']),
                     trailing: SizedBox(
                       width: 100,

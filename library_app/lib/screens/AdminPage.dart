@@ -118,6 +118,8 @@ class AdminPage extends StatelessWidget {
                 var status = (controllerStatus.text);
                 final title = controllerTitle.text;
                 add(name, status, title);
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('You have successfully added a book')));
               },
               child: Text('Enter')),
           Text('BOOK LIST'),
@@ -140,10 +142,10 @@ class AdminPage extends StatelessWidget {
                           style: TextStyle(fontSize: 10),
                         ),
                         subtitle: Text(
-                          'Name of Author: ' +
-                              documentSnapshot['name'] +
-                              'Availability: ' +
-                              documentSnapshot['Availability Status'],
+                          'Name of book :' +
+                              documentSnapshot['Book Title'] +
+                              'Name of Author: ' +
+                              documentSnapshot['name'],
                           style: TextStyle(fontSize: 10),
                         ),
                         trailing: SizedBox(
